@@ -10,7 +10,7 @@ function defaultGetAppName() {
     }
 }
 function addQiankunPrefix(elStyle, getAppName) {
-    if (!elStyle.prefixed && window.__POWERED_BY_QIANKUN__) {
+    if (elStyle && !elStyle.prefixed && window.__POWERED_BY_QIANKUN__) {
         getAppName = getAppName || defaultGetAppName;
         elStyle.prefixed = true;
         process(document.createElement("div"), elStyle, getAppName());
