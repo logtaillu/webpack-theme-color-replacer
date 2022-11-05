@@ -10,3 +10,5 @@ test/e2e/reports
 selenium-debug.log
 _tmp*
 .travis.yml
+.yarn
+yarn.lock

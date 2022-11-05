@@ -1,7 +1,11 @@
-使用：
+# @loglu/webpack-theme-color-replacer
+基于`webpack-theme-color-replacer`二次开发  
+# Install
+npm i -D @loglu/webpack-theme-color-replacer
+# 使用
 ````js
 // .umirc
-const getChainWebpack = require("webpack-theme-color-replacer/getChainWebpack");
+const getChainWebpack = require("@loglu/webpack-theme-color-replacer/getChainWebpack");
 {
   chainWebpack: getChainWebpack({
     // 需要生成一系列颜色的，比如primary-color
@@ -14,7 +18,7 @@ const getChainWebpack = require("webpack-theme-color-replacer/getChainWebpack");
 ````
 ````js
 // app.ts入口文件，不同入口路径采用不同主题色的示例
-import {userRender} from "webpack-theme-color-replacer/antThemeUtil";
+import {userRender} from "@loglu/webpack-theme-color-replacer/antThemeUtil";
 export const render = userRender(() => { 
   const href = window.location.href;
   if (href.includes("xxx")) {
@@ -29,7 +33,7 @@ export const render = userRender(() => {
 ````js
 // 切换控制函数
 // 手动加div[data-qiankun=xxx]前缀时从antQThemeUtil导入，其他地方同理
-import {updateColor} from "webpack-theme-color-replacer/antThemeUtil";
+import {updateColor} from "@loglu/webpack-theme-color-replacer/antThemeUtil";
 updateColor({
   // 系列色
   seriesColors:["#666666"],
@@ -37,10 +41,9 @@ updateColor({
   getAppName: ()=>"xxx"
 })
 ````
-[update log]  
+# update log  
 项目环境：
-父子应用umi 2.x,antd v3，qiankun 2.x对接
-修改点
+父子应用umi 2.x,antd v3，qiankun 2.x对接  
 1. 增加injectAhead:boolean选项，允许concat source时将代码片段接在前面；
   qiankun对接时从最后一个window挂载项上找lifecycle exports，接在最后会导致找不到lifecycle导出
 2. themeColorChange中增加preHandleCss函数选项用于预处理cssText
@@ -83,6 +86,8 @@ module.exports = {
             // },
             injectCss: false, // optional. Inject css text into js file, no need to download `theme-colors-xxx.css` any more.
             isJsUgly: process.env.NODE_ENV !== 'development', // optional. Set to `true` if your js is uglified. Default is set by process.env.NODE_ENV.
+            // concat resource时是否接在前面，默认true处理lifecycle找不到的问题
+            injectAhead:true
         })
     ],
 }
