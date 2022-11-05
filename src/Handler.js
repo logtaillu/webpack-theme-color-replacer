@@ -3,7 +3,6 @@ var AssetsExtractor = require('./AssetsExtractor')
 var replaceFileName = require('./replaceFileName')
 var { ConcatSource } = require('webpack-sources');
 var LineReg = /\n/g
-
 module.exports = class Handler {
     constructor(options) {
         // Default options
@@ -12,6 +11,8 @@ module.exports = class Handler {
             matchColors: [],
             isJsUgly: !(process.env.NODE_ENV === 'development' || process.argv.find(arg => arg.match(/\bdev/))),
             configVar: 'tc_cfg_' + Math.random().toString().slice(2),
+            // 接入在最前面，处理qiankun对接找不到lifecycle
+            injectAhead: true
         }, options);
         this.assetsExtractor = new AssetsExtractor(this.options)
     }
@@ -102,7 +103,11 @@ module.exports = class Handler {
 
     getEntryJs(outputName, assetSource, cssCode) {
         var configJs = this.getConfigJs(outputName, cssCode)
-        return new ConcatSource(assetSource, configJs)
+        if (this.options.injectAhead) {
+            return new ConcatSource(configJs, assetSource);
+        } else {
+            return new ConcatSource(assetSource, configJs)
+        }
     }
 }
 
