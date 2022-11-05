@@ -74,7 +74,7 @@ module.exports = {
                     setCssTo(cssText)
                     _urlColors[url] = { id: id, colors: newColors }
                     resolve(elStyle)
-                }, reject)
+                }, reject, options.cache)
             }
 
             function setCssTo(cssText) {
@@ -92,10 +92,12 @@ module.exports = {
         })
         return cssText
     },
-    getCssString: function (url, resolve, reject) {
+    getCssString: function (url, resolve, reject, cache) {
         var css = theme_COLOR_config.cssCode
         if (css) { // css已内嵌在js中
-            theme_COLOR_config.cssCode = ''
+            if (cache!==true) {
+                theme_COLOR_config.cssCode = ''
+            }
             resolve(css)
             return
         }

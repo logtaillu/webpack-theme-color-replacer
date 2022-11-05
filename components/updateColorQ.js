@@ -9,6 +9,8 @@ function updateColorQ(options) {
         }
     }
     return updateColor({
+        // 增加cache配置不清除cssCode应对节点卸载的情况
+        cache: true,
         ...options,
         handleCss
     });
