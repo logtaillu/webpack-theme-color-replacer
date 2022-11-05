@@ -1,10 +1,54 @@
-[update log]
+使用：
+````js
+// .umirc
+const getChainWebpack = require("webpack-theme-color-replacer/getChainWebpack");
+{
+  chainWebpack: getChainWebpack({
+    // 需要生成一系列颜色的，比如primary-color
+        seriesColors: ["#666666"],
+        // 单个颜色
+        matchColors: [],
+        // 其他配置继承webpack-theme-color-replacer
+    })
+}
+````
+````js
+// app.ts入口文件，不同入口路径采用不同主题色的示例
+import {userRender} from "webpack-theme-color-replacer/antThemeUtil";
+export const render = userRender(() => { 
+  const href = window.location.href;
+  if (href.includes("xxx")) {
+      return { 
+        seriesColors: ["#666666"]
+      };
+  } else {
+      return { seriesColors: ["#999999"] };
+  }
+});
+````
+````js
+// 切换控制函数
+// 手动加div[data-qiankun=xxx]前缀时从antQThemeUtil导入，其他地方同理
+import {updateColor} from "webpack-theme-color-replacer/antThemeUtil";
+updateColor({
+  // 系列色
+  seriesColors:["#666666"],
+  // antQThemeUtil时，[data-qiankun=xxx]的appName，默认查找第一个div[data-qiankun]元素的
+  getAppName: ()=>"xxx"
+})
+````
+[update log]  
 项目环境：
-父子应用umi 2.x，qiankun 2.x对接
+父子应用umi 2.x,antd v3，qiankun 2.x对接
+修改点
 1. 增加injectAhead:boolean选项，允许concat source时将代码片段接在前面；
   qiankun对接时从最后一个window挂载项上找lifecycle exports，接在最后会导致找不到lifecycle导出
 2. themeColorChange中增加preHandleCss函数选项用于预处理cssText
 3. resolve elStyle用于进行后续处理
+4. 增加一些项目常用函数
+5. 层级覆盖问题，从@mega-apps/webpack-theme-color-replacer的文档copy了changeSelector
+6. box-shadow: rgb(xx xx xx / 20%)类型=>颜色系列中需要放"xx xx xx"
+
 ***
 This plugin can extract theme color styles from all the outputed css files (such as element-ui theme colors), and make a 'theme-colors.css' file which only contains color styles. At runtime in your web page, the client part will help you to download this css file, and then replace the colors into new customized colors dynamicly.
 
