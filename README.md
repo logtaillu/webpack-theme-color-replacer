@@ -3,7 +3,8 @@
 父子应用umi 2.x，qiankun 2.x对接
 1. 增加injectAhead:boolean选项，允许concat source时将代码片段接在前面；
   qiankun对接时从最后一个window挂载项上找lifecycle exports，接在最后会导致找不到lifecycle导出
-
+2. themeColorChange中增加preHandleCss函数选项用于预处理cssText
+3. resolve elStyle用于进行后续处理
 ***
 This plugin can extract theme color styles from all the outputed css files (such as element-ui theme colors), and make a 'theme-colors.css' file which only contains color styles. At runtime in your web page, the client part will help you to download this css file, and then replace the colors into new customized colors dynamicly.
 

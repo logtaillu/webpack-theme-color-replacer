@@ -22,13 +22,20 @@ module.exports = {
 
         return new Promise(function (resolve, reject) {
             var last = _urlColors[cssUrl] //url可能被changeUrl改变
+            // 处理页面切换卸载了style节点，但重新加载时update而非mount的情况
+            // 判断style节点是否存在，不存在则重置缓存
+            var elStyle = last && document.getElementById(last.id);
+            if (!elStyle) {
+                delete _urlColors[cssUrl];
+                last = null;
+            }
             if (last) {
                 //之前已替换过
                 oldColors = last.colors
             }
 
             if (isSameArr(oldColors, newColors)) {
-                resolve()
+                resolve(elStyle)
             } else {
                 setCssText(last, cssUrl, resolve, reject)
             }
@@ -54,7 +61,7 @@ module.exports = {
             if (elStyle && last.colors) {
                 setCssTo(elStyle.innerText)
                 last.colors = newColors
-                resolve()
+                resolve(elStyle)
             } else {
                 //第一次替换
                 var id = 'css_' + (+new Date())
@@ -66,7 +73,7 @@ module.exports = {
                 _this.getCssString(url, function (cssText) {
                     setCssTo(cssText)
                     _urlColors[url] = { id: id, colors: newColors }
-                    resolve()
+                    resolve(elStyle)
                 }, reject)
             }
 
