@@ -1,6 +1,6 @@
 {
   "name": "@logluarx/webpack-theme-color-replacer",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "基于webpack-theme-color-replacer,处理antd样式和qiankun对接. A webpack plugin designed to dynamicly change the theme colors at runtime. 实现运行时快速动态替换主题色的webpack插件. ",
   "main": "src/index.js",
   "scripts": {
