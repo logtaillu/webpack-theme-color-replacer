@@ -1,11 +1,11 @@
-# @loglu/webpack-theme-color-replacer
+# @logluarx/webpack-theme-color-replacer
 基于`webpack-theme-color-replacer`二次开发  
 # Install
-npm i -D @loglu/webpack-theme-color-replacer
+npm i -D @logluarx/webpack-theme-color-replacer
 # 使用
 ````js
 // .umirc
-const getChainWebpack = require("@loglu/webpack-theme-color-replacer/getChainWebpack");
+const getChainWebpack = require("@logluarx/webpack-theme-color-replacer/getChainWebpack");
 {
   chainWebpack: getChainWebpack({
     // 需要生成一系列颜色的，比如primary-color
@@ -18,7 +18,7 @@ const getChainWebpack = require("@loglu/webpack-theme-color-replacer/getChainWeb
 ````
 ````js
 // app.ts入口文件，不同入口路径采用不同主题色的示例
-import {userRender} from "@loglu/webpack-theme-color-replacer/antThemeUtil";
+import {userRender} from "@logluarx/webpack-theme-color-replacer/antThemeUtil";
 export const render = userRender(() => { 
   const href = window.location.href;
   if (href.includes("xxx")) {
@@ -33,7 +33,7 @@ export const render = userRender(() => {
 ````js
 // 切换控制函数
 // 手动加div[data-qiankun=xxx]前缀时从antQThemeUtil导入，其他地方同理
-import {updateColor} from "@loglu/webpack-theme-color-replacer/antThemeUtil";
+import {updateColor} from "@logluarx/webpack-theme-color-replacer/antThemeUtil";
 updateColor({
   // 系列色
   seriesColors:["#666666"],
