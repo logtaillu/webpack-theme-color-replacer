@@ -6,8 +6,8 @@ var getAntdSerials = require('./components/getAntdSerials');
 var changeSelector = require('./components/antdChangeSelector');
 module.exports = {
     varyColor,
-    userRender: function (getColorOptions) {
-        return userRender(getColorOptions, updateColor);
+    userRender: function (getColorOptions, checkExist) {
+        return userRender(getColorOptions, updateColor, checkExist);
     },
     updateColor,
     changeSelector,
